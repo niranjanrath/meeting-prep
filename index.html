@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meeting Prep</title>
+  <meta name="description" content="Prepare smarter. Guided meeting preparation notes, stored locally in your browser.">
+  <script>
+    /* Apply the saved theme before first paint to avoid a light/dark flash. */
+    try {
+      var t = localStorage.getItem('mp-theme') || 'system';
+      if (t === 'system') t = (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      document.documentElement.dataset.theme = t;
+    } catch (e) { /* storage blocked: default light theme */ }
+  </script>
+  <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/source-serif-4-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#view">Skip to content</a>
+
+  <div class="app">
+    <header class="app-header">
+      <a class="brand" href="#/new" aria-label="Meeting Prep – home">
+        <span class="brand-ico" id="brand-ico"></span>
+        <span class="brand-name">Meeting Prep</span>
+      </a>
+
+      <div class="search">
+        <span class="search-ico" id="search-ico"></span>
+        <input id="global-search" type="search" placeholder="Search preparations" aria-label="Search saved preparations" autocomplete="off">
+      </div>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to dark mode"></button>
+      <span class="avatar" id="avatar" title="Your initials (change in Settings)">NR</span>
+    </header>
+
+    <nav class="sidebar" aria-label="Main">
+      <ul>
+        <li><a class="nav-item" href="#/new" data-route="new" data-icon="edit"><span class="nav-ico"></span><span class="nav-label"><span aria-hidden="true">New</span><span class="sr-only">New Meeting Prep</span></span></a></li>
+        <li><a class="nav-item" href="#/preps" data-route="preps" data-icon="file-text"><span class="nav-ico"></span><span class="nav-label"><span aria-hidden="true">Saved</span><span class="sr-only">My Preparations</span></span></a></li>
+        <li><a class="nav-item" href="#/templates" data-route="templates" data-icon="grid"><span class="nav-ico"></span><span class="nav-label"><span aria-hidden="true">Templates</span><span class="sr-only">Templates</span></span></a></li>
+        <li><a class="nav-item" href="#/settings" data-route="settings" data-icon="settings"><span class="nav-ico"></span><span class="nav-label"><span aria-hidden="true">Settings</span><span class="sr-only">Settings</span></span></a></li>
+      </ul>
+    </nav>
+
+    <main class="main">
+      <div id="banner" class="banner" role="alert" hidden></div>
+      <div id="view" class="view" tabindex="-1"></div>
+    </main>
+  </div>
+
+  <div id="print-root" aria-hidden="true"></div>
+  <div id="toast-host" class="toast-host" role="status" aria-live="polite"></div>
+  <dialog id="dialog" class="dialog" aria-labelledby="dialog-title"></dialog>
+
+  <div id="boot-error" class="boot-error" hidden>
+    <strong>The app could not start.</strong>
+    Browsers block JavaScript modules on <code>file://</code> pages. Serve this folder over HTTP instead,
+    e.g. <code>python3 -m http.server 8080</code> and open <code>http://localhost:8080</code>. See README.md.
+  </div>
+  <noscript><p style="padding:16px">Meeting Prep needs JavaScript enabled.</p></noscript>
+
+  <script type="module" src="js/app.js"></script>
+  <script>
+    setTimeout(function () {
+      if (!window.__mpBooted) document.getElementById('boot-error').hidden = false;
+    }, 2500);
+  </script>
+</body>
+</html>
